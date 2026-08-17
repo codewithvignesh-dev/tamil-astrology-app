@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <title>ஜாதகம்</title>
+</head>
+<body>
+<h1>ஜாதகம்</h1>
+<h2>பிறப்பு விவரம்</h2>
+<p>பெயர்: {{ horoscope.birth.name }}</p>
+<p>தேதி: {{ horoscope.birth.date }}</p>
+<p>நேரம்: {{ horoscope.birth.time }}</p>
+<p>இடம்: {{ horoscope.birth.latitude }}, {{ horoscope.birth.longitude }}</p>
+<h2>லக்னம்</h2>
+<p>{{ horoscope.lagna.sign_tamil }} {{ horoscope.lagna.degree }}° {{ horoscope.lagna.minute }}' {{ horoscope.lagna.second }}" {{ horoscope.lagna.nakshatra }} Pada {{ horoscope.lagna.pada }}</p>
+<h2>கிரக நிலைகள்</h2>
+<table>
+    <thead>
+    <tr>
+        <th>கிரகம்</th>
+        <th>ராசி</th>
+        <th>பாகை</th>
+        <th>வக்ரம்</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for planet in horoscope.planets %}
+        <tr>
+            <td>{{ planet.name_tamil }}</td>
+            <td>{{ planet.sign_tamil }}</td>
+            <td>{{ planet.degree }}° {{ planet.minute }}' {{ planet.second }}"</td>
+            <td>{% if planet.retrograde %}ஆம்{% else %}இல்லை{% endif %}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>
