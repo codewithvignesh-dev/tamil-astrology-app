@@ -4,7 +4,7 @@ import json
 from datetime import datetime
 from zoneinfo import ZoneInfo
 from calendar import monthrange
-from astrology.models import BirthDetails
+from astrology.models import BirthDetails, AdditionalDetails
 from astrology.angles import decimal_to_dms
 from astrology.constants import SIGN_RULERS, PLANET_NAMES_TAMIL, DOB_to_DAY
 from astrology.angles import decimal_to_dms
@@ -18,6 +18,7 @@ web_blueprint = Blueprint("web", __name__)
 def _parse_birth_details() -> BirthDetails:
     # Accept district name and map to lat/lon using data/districts.json
     name = request.form.get("name", "").strip()
+    gender = request.form.get("gender", "").strip()
     date = request.form.get("date", "")
     time = request.form.get("time", "")
     timezone = request.form.get("timezone", "Asia/Kolkata").strip() or "Asia/Kolkata"
@@ -38,6 +39,7 @@ def _parse_birth_details() -> BirthDetails:
 
     return BirthDetails(
         name=name,
+        gender=gender,
         date=date,
         time=time,
         latitude=lat,
@@ -45,7 +47,46 @@ def _parse_birth_details() -> BirthDetails:
         timezone=timezone,
     )
 
-def _render_horoscope_template(birth_details: BirthDetails):
+def _parse_additional_details() -> AdditionalDetails:
+    additional_details = {
+        "kulam": request.form.get("kulam", "").strip(),
+        "kothiram": request.form.get("kothiram", "").strip(),
+        "caste": request.form.get("caste", "").strip(),
+        "land": request.form.get("land", "").strip(),
+        "work": request.form.get("work", "").strip(),
+        "salary": request.form.get("salary", "").strip(),
+    }
+
+    family_names = request.form.getlist("family_name[]")
+    family_relations = request.form.getlist("family_relation[]")
+    family_ages = request.form.getlist("family_age[]")
+    family_works = request.form.getlist("family_work[]")
+    family_marital_statuses = request.form.getlist("family_marital_status[]")
+
+    family_members = []
+
+    for i in range(len(family_names)):
+        family_members.append({
+            "name": family_names[i].strip(),
+            "relation": family_relations[i].strip() if i < len(family_relations) else "",
+            "age": family_ages[i].strip() if i < len(family_ages) else "",
+            "work": family_works[i].strip() if i < len(family_works) else "",
+            "martial_status": family_marital_statuses[i].strip() if i < len(family_marital_statuses) else "",
+        })
+
+    additional_details["family_members"] = family_members
+
+    return AdditionalDetails(
+        kulam=additional_details["kulam"],
+        kothiram=additional_details["kothiram"],
+        caste=additional_details["caste"],
+        land=additional_details["land"],
+        work=additional_details["work"],
+        salary=int(additional_details["salary"]) if additional_details["salary"].isdigit() else 0,
+        family_details=additional_details["family_members"],
+    )
+
+def _render_horoscope_template(birth_details: BirthDetails, additional_details: AdditionalDetails):
     service = HoroscopeService()
     horoscope_data = service.generate_horoscope(birth_details)
 
@@ -315,6 +356,7 @@ def _render_horoscope_template(birth_details: BirthDetails):
     return render_template(
         "chart.html",
         name=horoscope_data.birth.name,
+        gender=birth_details.gender,
         lagna=horoscope_data.lagna,
         planets=planet_context,
         basic_details=basic_details,
@@ -325,6 +367,7 @@ def _render_horoscope_template(birth_details: BirthDetails):
         dasa=horoscope_data.dasa,
         current_dasha=current_dasha,
         planet_labels=planet_labels,
+        additional_details=additional_details,
     )
 
 @web_blueprint.route("/")
@@ -354,7 +397,12 @@ def chart():
 
     try:
         birth_details = _parse_birth_details()
-        return _render_horoscope_template(birth_details)
+        additional_details_checkbox = request.form.get("additional_details") == "yes"
+        if additional_details_checkbox:
+            additional_details = _parse_additional_details()
+        else:
+            additional_details = []
+        return _render_horoscope_template(birth_details, additional_details=additional_details)
     except InvalidBirthDataError as exc:
         return render_template("error.html", message=str(exc))
     except Exception as e:

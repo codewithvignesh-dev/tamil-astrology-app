@@ -78,8 +78,12 @@ body {
     display: none;
 }
 
-@media print {
+/* Additional Details - Print Only */
+.additional-details-print {
+    display: none;
+}
 
+@media print {
     @page {
         size: A4 portrait;
         margin: 8mm 10mm 7mm 10mm;
@@ -368,13 +372,6 @@ body {
     .grid-cols-4 {
         grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
     }
-
-    /* ============================================================
-       Horoscope charts (Rasi / Navamsa / Bhava) — single source of
-       truth for sizing. .horoscope-chart, .print-chart and
-       .charts-container .chart are treated as the same component so
-       all three charts always render at an identical size, whichever
-       markup variant is used. */
 
     .horoscope-charts,
     .print-chart-area,
@@ -836,7 +833,7 @@ body {
     .print-details-label,
     .print-details-value {
         padding: .45mm 0 !important;
-        font-size: 6.5pt !important;
+        font-size: 8pt !important;
         line-height: 1.2 !important;
         color: #000 !important;
         border: 0 !important;
@@ -1254,9 +1251,6 @@ body {
         visibility: hidden !important;
         content: none !important;
     }
-}
-
-@media print {
 
     main > section:has(.charts-container),
     .charts-container {
@@ -1460,14 +1454,14 @@ body {
     }
 
     .print-details-row {
-        min-height: 4mm !important;
+        min-height: 5mm !important;
         grid-template-columns: 39% 61% !important;
     }
 
     .print-details-label,
     .print-details-value {
         padding: .35mm 0 !important;
-        font-size: 6.4pt !important;
+        font-size: 8pt !important;
         line-height: 1.1 !important;
     }
 
@@ -1507,4 +1501,14 @@ body {
         line-height: 1.15 !important;
     }
 
+    .additional-details-print {
+        display: block !important;
+    }
+
+    .additional-details-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        column-gap: 2.5rem !important;
+        row-gap: 0.75rem !important;
+    }
 }

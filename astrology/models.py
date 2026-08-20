@@ -6,11 +6,23 @@ from typing import Dict, List, Optional, Any
 @dataclass
 class BirthDetails:
     name: str
+    gender: str
     date: str
     time: str
     latitude: float
     longitude: float
     timezone: str
+
+
+@dataclass
+class AdditionalDetails:
+    kulam: str
+    kothiram: str
+    caste: str
+    land: str
+    work: str
+    salary: int
+    family_details: list
 
 
 @dataclass
