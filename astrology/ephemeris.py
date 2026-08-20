@@ -166,7 +166,9 @@ def calculate_paava_chakram(
         remainder = (value - degree) * 60.0
 
         minute = int(remainder)
-        second = round((remainder - minute) * 60.0)
+        second = round(
+            (remainder - minute) * 60.0
+        )
 
         if second >= 60:
             second = 0
@@ -177,6 +179,21 @@ def calculate_paava_chakram(
             degree = (degree + 1) % 360
 
         return degree, minute, second
+
+    def longitude_to_sign(longitude_value):
+        longitude_value %= 360.0
+
+        sign_index = int(longitude_value // 30.0)
+        sign_degree = longitude_value % 30.0
+
+        degree, minute, second = dms(sign_degree)
+
+        return {
+            "sign_index": sign_index,
+            "sign_degree": degree,
+            "sign_minute": minute,
+            "sign_second": second,
+        }
 
     bhava_midpoints = [
         asc,
@@ -196,7 +213,11 @@ def calculate_paava_chakram(
     def contains_longitude(start, longitude_value, end):
         total = forward_arc(start, end)
         position = forward_arc(start, longitude_value)
-        return position < total or abs(position - total) < 1e-10
+
+        return (
+            position < total
+            or abs(position - total) < 1e-10
+        )
 
     houses = []
 
@@ -216,34 +237,28 @@ def calculate_paava_chakram(
             next_mid,
         )
 
-        mid_degree, mid_minute, mid_second = dms(current_mid)
-        start_degree, start_minute, start_second = dms(start)
-        end_degree, end_minute, end_second = dms(end)
+        mid_degree, mid_minute, mid_second = dms(
+            current_mid
+        )
 
-        house_planets = []
-        house_planet_keys = []
+        start_degree, start_minute, start_second = dms(
+            start
+        )
 
-        for planet_key, planet in planets.items():
+        end_degree, end_minute, end_second = dms(
+            end
+        )
 
-            planet_longitude = float(
-                planet["longitude"]
-            ) % 360.0
-
-            if contains_longitude(
-                start,
-                planet_longitude,
-                end,
-            ):
-                house_planet_keys.append(planet_key)
-                house_planets.append(
-                    planet.get(
-                        "name_tamil",
-                        planet_key,
-                    )
-                )
+        mid_sign = longitude_to_sign(current_mid)
+        start_sign = longitude_to_sign(start)
+        end_sign = longitude_to_sign(end)
 
         houses.append({
             "house": index + 1,
+
+            "chart_index": (
+                int(asc // 30.0) + index
+            ) % 12,
 
             "start": start,
             "start_degree": start_degree,
@@ -260,8 +275,16 @@ def calculate_paava_chakram(
             "end_minute": end_minute,
             "end_second": end_second,
 
-            "planet_keys": house_planet_keys,
-            "planets": house_planets,
+            "sign_index": mid_sign["sign_index"],
+            "sign_degree": mid_sign["sign_degree"],
+            "sign_minute": mid_sign["sign_minute"],
+            "sign_second": mid_sign["sign_second"],
+
+            "start_sign_index": start_sign["sign_index"],
+            "end_sign_index": end_sign["sign_index"],
+
+            "planet_keys": [],
+            "planets": [],
         })
 
     planet_house_map = {}
@@ -286,8 +309,82 @@ def calculate_paava_chakram(
 
         planet_house_map[planet_key] = assigned_house
 
+    sign_planets = {
+        sign_index: []
+        for sign_index in range(12)
+    }
+
+    sign_planet_keys = {
+        sign_index: []
+        for sign_index in range(12)
+    }
+
+    planet_sign_indices = {}
+
+    for planet_key, planet in planets.items():
+
+        planet_longitude = float(
+            planet["longitude"]
+        ) % 360.0
+
+        natal_sign_index = int(
+            planet_longitude // 30.0
+        )
+
+        planet_sign_indices[planet_key] = natal_sign_index
+
+        house_number = planet_house_map.get(
+            planet_key
+        )
+
+        if house_number is None:
+            continue
+
+        chart_index = (
+            int(asc // 30.0) +
+            house_number -
+            1
+        ) % 12
+
+        sign_planet_keys[chart_index].append(
+            planet_key
+        )
+
+        sign_planets[chart_index].append(
+            planet.get(
+                "name_tamil",
+                planet_key,
+            )
+        )
+
+    for house in houses:
+
+        chart_index = house["chart_index"]
+
+        house["planet_keys"] = (
+            sign_planet_keys[chart_index].copy()
+        )
+
+        house["planets"] = (
+            sign_planets[chart_index].copy()
+        )
+
+    houses_by_sign = [
+        []
+        for _ in range(12)
+    ]
+
+    for house in houses:
+        houses_by_sign[
+            house["chart_index"]
+        ].append(house)
+
     return {
         "lagna": asc,
+
+        "lagna_sign_index": int(
+            asc // 30.0
+        ),
 
         "angles": {
             "ascendant": asc,
@@ -298,7 +395,15 @@ def calculate_paava_chakram(
 
         "houses": houses,
 
+        "houses_by_sign": houses_by_sign,
+
         "planets": planet_house_map,
+
+        "planet_sign_indices": planet_sign_indices,
+
+        "sign_planets": sign_planets,
+
+        "sign_planet_keys": sign_planet_keys,
 
         "house_system": "Sripati",
 

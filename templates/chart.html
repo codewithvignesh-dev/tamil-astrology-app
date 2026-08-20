@@ -651,7 +651,7 @@
             </div>
 
             <div
-                class="padacharam overflow-hidden rounded-3xl border
+                class="overflow-hidden rounded-3xl border
                        border-slate-200 bg-white shadow-xl
                        shadow-slate-100"
             >
@@ -848,7 +848,7 @@
 
         {% if rasi_chart is defined %}
 
-        <section class="mb-10">
+        <section class="charts-container mb-10">
 
             <div class="non-printable mb-6">
                 <p
@@ -897,7 +897,7 @@
                     </div>
 
                     <div
-                        class="grid grid-cols-4 grid-rows-4 gap-1
+                        class="chart grid grid-cols-4 grid-rows-4 gap-1
                                overflow-hidden rounded-2xl
                                border-2 border-violet-300
                                bg-violet-200"
@@ -1054,7 +1054,7 @@
                     </div>
 
                     <div
-                        class="grid grid-cols-4 grid-rows-4 gap-1
+                        class="chart grid grid-cols-4 grid-rows-4 gap-1
                                overflow-hidden rounded-2xl
                                border-2 border-indigo-300
                                bg-indigo-200"
@@ -1187,12 +1187,16 @@
 
                 {% endif %}
 
-                {% if paava_chakram is defined %}
+                <!-- =====================================================
+                    BHAVA / PAAVA CHAKRAM
+                ====================================================== -->
+
+                {% if paava_chart is defined %}
 
                 <div
                     class="rounded-3xl border border-violet-100
-                           bg-white p-5 shadow-xl
-                           shadow-violet-100/30 sm:p-6"
+                        bg-white p-5 shadow-xl
+                        shadow-violet-100/30 sm:p-6"
                 >
 
                     <div class="mb-5 flex items-center justify-between">
@@ -1200,46 +1204,45 @@
                         <div>
                             <h3
                                 class="text-xl font-black
-                                       text-slate-900"
+                                    text-slate-900"
                             >
                                 பாவ கட்டம்
                             </h3>
 
                             <p class="non-printable text-sm text-slate-500">
-                                Bhava Chart
+                                Paava Chart
                             </p>
                         </div>
 
                         <div
                             class="non-printable flex h-11 w-11 items-center
-                                   justify-center rounded-xl
-                                   bg-violet-100 text-violet-600"
+                                justify-center rounded-xl
+                                bg-violet-100 text-violet-600"
                         >
                             ✦
                         </div>
 
                     </div>
 
-                    {% set bhava_layout = [
-                        11, 0, 1, 2,
-                        10, -1, -1, 3,
-                        9, -1, -1, 4,
-                        8, 7, 6, 5
-                    ] %}
-
                     <div
-                        class="grid grid-cols-4 grid-rows-4 gap-1
-                               overflow-hidden rounded-2xl
-                               border-2 border-violet-300
-                               bg-violet-200"
+                        class="chart grid grid-cols-4 grid-rows-4 gap-1
+                            overflow-hidden rounded-2xl
+                            border-2 border-violet-300
+                            bg-violet-200"
                     >
 
-                        {% for house_index in bhava_layout %}
+                        {% set layout = [
+                            11, 0, 1, 2,
+                            10, -1, -1, 3,
+                            9, -1, -1, 4,
+                            8, 7, 6, 5
+                        ] %}
 
-                            {% if house_index != -1 %}
+                        {% for sign_index in layout %}
 
-                                {% set house_number = house_index + 1 %}
-                                {% set house = paava_chakram.houses[house_index] %}
+                            {% if sign_index != -1 %}
+
+                                {% set planets_in_sign = paava_chart.sign_planets[sign_index] %}
 
                                 <div
                                     class="
@@ -1247,7 +1250,7 @@
                                     relative min-h-[125px]
                                     bg-[#fffaf3]
                                     p-3 sm:p-4
-                                    {% if house_number == 1 %}
+                                    {% if lagna is defined and sign_index == lagna.sign_index %}
                                         bg-gradient-to-br
                                         from-amber-50
                                         to-orange-100
@@ -1258,76 +1261,28 @@
                                 >
 
                                     <div
-                                        class="mb-1 text-sm font-black
-                                               text-violet-700"
+                                        class="mb-2 text-sm font-black
+                                            text-violet-700"
                                     >
-                                        {{ house_number }}
+                                        {{ sign_index + 1 }}
                                     </div>
 
                                     <div
-                                        class="mb-2 text-[10px] font-semibold
-                                               text-slate-400"
+                                        class="text-xs font-medium leading-5
+                                            text-slate-700 whitespace-normal"
                                     >
-                                        {{ house.degree }}°
-                                        {{ house.minute }}′
-                                        {{ house.second }}″
+                                        {{ planets_in_sign | join(', ') }}
                                     </div>
 
-                                    <div
-                                        class="text-xs leading-5
-                                               text-slate-600"
-                                    >
-
-                                        {% if house.planet_keys %}
-
-                                            {% for planet_key in house.planet_keys %}
-
-                                                {% if planets is defined and planet_key in planets %}
-
-                                                    {% set planet = planets[planet_key] %}
-
-                                                    <span
-                                                        class="mr-1 inline-block
-                                                               font-semibold"
-                                                    >
-                                                        {{ planet.get(
-                                                            'name_tamil',
-                                                            planet_key
-                                                        ) }}
-                                                    </span>
-
-                                                {% else %}
-
-                                                    <span
-                                                        class="mr-1 inline-block
-                                                               font-semibold"
-                                                    >
-                                                        {{ planet_key }}
-                                                    </span>
-
-                                                {% endif %}
-
-                                            {% endfor %}
-
-                                        {% else %}
-
-                                            <span class="text-slate-300">
-                                                —
-                                            </span>
-
-                                        {% endif %}
-
-                                    </div>
-
-                                    {% if house_number == 1 %}
+                                    {% if lagna is defined and sign_index == lagna.sign_index %}
 
                                     <div
                                         class="absolute right-2 top-2
-                                               flex h-7 w-7 items-center
-                                               justify-center rounded-full
-                                               bg-amber-500 text-xs
-                                               font-black text-white
-                                               shadow-md"
+                                            flex h-7 w-7 items-center
+                                            justify-center rounded-full
+                                            bg-amber-500 text-xs
+                                            font-black text-white
+                                            shadow-md"
                                     >
                                         ல
                                     </div>
@@ -1342,13 +1297,13 @@
 
                         <div
                             class="col-start-2 col-span-2
-                                   row-start-2 row-span-2
-                                   flex min-h-[180px]
-                                   items-center justify-center
-                                   bg-gradient-to-br
-                                   from-violet-50
-                                   via-white to-amber-50
-                                   p-5 text-center"
+                                row-start-2 row-span-2
+                                flex min-h-[180px]
+                                items-center justify-center
+                                bg-gradient-to-br
+                                from-violet-50
+                                via-white to-amber-50
+                                p-5 text-center"
                         >
                             <div>
 
@@ -1356,44 +1311,32 @@
                                     src="{{ url_for('static', filename='images/logo.svg') }}"
                                     alt="Logo"
                                     class="mx-auto mb-4 h-24 w-24
-                                           text-violet-500 animate-float"
+                                        text-violet-500 animate-float"
                                 >
 
                                 <p
                                     class="text-lg font-black
-                                           text-slate-900"
+                                        text-slate-900"
                                 >
-                                    பாவம்
+                                    பாவ கட்டம்
                                 </p>
 
-                                <p
-                                    class="mt-1 font-semibold
-                                           text-violet-700"
-                                >
+                                <p class="mt-1 font-semibold text-violet-700">
                                     {{ name }}
                                 </p>
 
                                 {% if basic_details is defined %}
 
-                                <p
-                                    class="mt-1 font-semibold
-                                           text-violet-700"
-                                >
-                                    {{ basic_details.dob }} -
-                                    {{ basic_details.tob }}
+                                <p class="mt-1 font-semibold text-violet-700">
+                                    {{ basic_details.dob }} - {{ basic_details.tob }}
                                 </p>
 
-                                <p
-                                    class="mt-1 font-semibold
-                                           text-violet-700"
-                                >
+                                <p class="mt-1 font-semibold text-violet-700">
                                     {{ basic_details.raasi }} -
                                     {{ panchangam.nakshatra if panchangam is defined else '' }}
                                 </p>
 
-                                <p
-                                    class="mt-1 text-xs text-slate-500"
-                                >
+                                <p class="mt-1 text-xs text-slate-500">
                                     பாதம் - {{ basic_details.pada }}
                                 </p>
 

@@ -163,7 +163,6 @@ def _render_horoscope_template(birth_details: BirthDetails):
 
     rasi_chart = horoscope_data.rasi_chart
     paava_chakram = horoscope_data.paava_chakram
-    print(f"Rasi Chart : {rasi_chart}\n\nPaava Chart : {paava_chakram}")
 
     sign_names_tamil = [
         "மேஷம்",
@@ -241,25 +240,13 @@ def _render_horoscope_template(birth_details: BirthDetails):
         ]["planets"].append(
             planet_name
         )
-    # print(f"Paava chakram chart : {paava_chakram}")
-    for sign in paava_chakram.get("signs", []):
-        sign["planets"] = [
-            planet_labels.get(planet, planet)
-            for planet in sign.get("planets", [])
-        ]
-    # for house in paava_chakram.get("houses", []):
-    #     house["planets"] = [
-    #         planet_labels.get(planet, planet)
-    #         for planet in house.get("planets", [])
-    #     ]
 
     navamsa_lagna_sign_index = get_navamsa_sign(
         horoscope_data.lagna.longitude
     )
 
     navamsa_signs[
-        navamsa_lagna_sign_index
-    ]["planets"].insert(
+        navamsa_lagna_sign_index]["planets"].insert(
         0,
         "ல",
     )
@@ -267,6 +254,14 @@ def _render_horoscope_template(birth_details: BirthDetails):
     navamsa_chart = {
         "signs": navamsa_signs,
         "lagna_sign_index": navamsa_lagna_sign_index,
+    }
+
+    paava_chakram["sign_planets"] = {
+        sign_index: [
+            planet_labels.get(planet, planet)
+            for planet in planets
+        ]
+        for sign_index, planets in paava_chakram["sign_planets"].items()
     }
     
     def remaining_ymd(start, end):
@@ -293,11 +288,11 @@ def _render_horoscope_template(birth_details: BirthDetails):
 
     try:
         birth_datetime = datetime.strptime(
-    f"{horoscope_data.birth.date} {horoscope_data.birth.time}",
-    "%Y-%m-%d %H:%M"
-).replace(
-    tzinfo=ZoneInfo(horoscope_data.birth.timezone)
-)
+            f"{horoscope_data.birth.date} {horoscope_data.birth.time}",
+            "%Y-%m-%d %H:%M"
+        ).replace(
+            tzinfo=ZoneInfo(horoscope_data.birth.timezone)
+        )
         for dasha in horoscope_data.dasa:
             if dasha["start"] <= birth_datetime < dasha["end"]:
 
@@ -326,7 +321,7 @@ def _render_horoscope_template(birth_details: BirthDetails):
         panchangam=horoscope_data.panchangam,
         rasi_chart=rasi_chart,
         navamsa_chart=navamsa_chart,
-        paava_chakram=paava_chakram,
+        paava_chart=paava_chakram,
         dasa=horoscope_data.dasa,
         current_dasha=current_dasha,
         planet_labels=planet_labels,
