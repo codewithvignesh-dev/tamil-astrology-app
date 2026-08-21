@@ -511,9 +511,6 @@
     margin-block-start: calc(calc(var(--spacing) * 3) * var(--tw-space-y-reverse));
     margin-block-end: calc(calc(var(--spacing) * 3) * calc(1 - var(--tw-space-y-reverse)));
   }
-  .gap-x-8 {
-    column-gap: calc(var(--spacing) * 8);
-  }
   .gap-x-10 {
     column-gap: calc(var(--spacing) * 10);
   }
@@ -1121,9 +1118,6 @@
     .md\:grid-cols-2 {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
-    .md\:grid-cols-3 {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
     .md\:grid-cols-4 {
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
@@ -1202,13 +1196,14 @@ body {
   header.no-print {
     display: block !important;
     width: 100% !important;
-    margin: 0 0 4mm 0 !important;
+    margin: 0 0 3mm 0 !important;
     padding: 0 !important;
     border: 0 !important;
     border-radius: 0 !important;
     background: #fff !important;
     box-shadow: none !important;
     backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
   }
   header.no-print > .no-print {
     display: block !important;
@@ -1244,45 +1239,48 @@ body {
     display: block !important;
     margin: 0 !important;
     padding: 0 !important;
-    font-size: 16pt !important;
-    line-height: 1.15 !important;
+    font-size: 15pt !important;
+    line-height: 1.05 !important;
     font-weight: 900 !important;
     letter-spacing: .3px !important;
     color: #000 !important;
   }
   .print-subtitle {
     display: block !important;
-    margin: 0 0 1.5mm 0 !important;
+    margin: 0 0 1mm 0 !important;
     padding: 0 !important;
-    font-size: 9pt !important;
-    line-height: 1.2 !important;
+    font-size: 8pt !important;
+    line-height: 1.15 !important;
     font-weight: 700 !important;
     letter-spacing: .08em !important;
     color: #000 !important;
   }
-  .print-address {
+  .print-address, .print-contact {
     display: block !important;
-    margin: 1mm 0 0 0 !important;
+    margin: .4mm 0 0 0 !important;
     padding: 0 !important;
-    font-size: 7pt !important;
-    line-height: 1.25 !important;
-    font-weight: 500 !important;
+    font-size: 6.5pt !important;
+    line-height: 1.15 !important;
     color: #000 !important;
   }
   .print-contact {
-    display: block !important;
-    margin: .5mm 0 0 0 !important;
-    padding: 0 !important;
-    font-size: 7pt !important;
-    line-height: 1.25 !important;
     font-weight: 700 !important;
-    color: #000 !important;
   }
-  .print-only {
+  .print-only, header .print-only {
     display: block !important;
   }
-  header .print-only {
+  .no-print, form, footer, .pointer-events-none, body > .fixed, .print-hide, .non-printable {
+    display: none !important;
+    visibility: hidden !important;
+  }
+  header.no-print, header.no-print .no-print {
     display: block !important;
+    visibility: visible !important;
+  }
+  .print-hide *, .non-printable *, .non-printable::before, .non-printable::after {
+    display: none !important;
+    visibility: hidden !important;
+    content: none !important;
   }
   main {
     width: 100% !important;
@@ -1294,16 +1292,18 @@ body {
   }
   main > section {
     width: 100% !important;
-    margin: 0 0 3mm 0 !important;
+    margin: 0 0 2mm 0 !important;
     padding: 0 !important;
     min-height: 0 !important;
     height: auto !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
   }
   main > section:first-of-type {
     margin-top: 0 !important;
   }
   main > section > div:first-child {
-    margin: 0 0 1.5mm 0 !important;
+    margin: 0 0 1mm 0 !important;
     padding: 0 !important;
   }
   main > section > div:first-child p {
@@ -1317,15 +1317,6 @@ body {
     font-weight: 900 !important;
     color: #000 !important;
   }
-  .no-print, form, footer {
-    display: none !important;
-  }
-  header.no-print, header.no-print .no-print {
-    display: block !important;
-  }
-  .pointer-events-none, body > .fixed {
-    display: none !important;
-  }
   .rounded-3xl, .rounded-2xl, .rounded-xl, .rounded-full {
     border-radius: 0 !important;
   }
@@ -1336,25 +1327,22 @@ body {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
   }
-  .bg-white, .bg-white\/80, .bg-white\/70, .bg-slate-50, .bg-slate-100, .bg-violet-50, .bg-violet-100, .bg-indigo-50, .bg-indigo-100, .bg-amber-50, .bg-amber-100, .bg-red-100, .bg-emerald-100, .bg-gradient-to-r, .bg-gradient-to-br {
+  .bg-white, .bg-white\/80, .bg-white\/70, .bg-slate-50, .bg-slate-100, .bg-violet-50, .bg-violet-100, .bg-indigo-50, .bg-indigo-100, .bg-amber-50, .bg-amber-100, .bg-red-100, .bg-emerald-100, .bg-gradient-to-r, .bg-gradient-to-br, .bg-amber-50\/50, .bg-violet-50\/40, .bg-amber-50\/40, .hover\:bg-violet-50\/40, .hover\:bg-violet-50\/50, .hover\:bg-amber-50 {
     background: #fff !important;
   }
   .text-slate-900, .text-slate-800, .text-slate-700, .text-slate-600, .text-slate-500, .text-slate-400, .text-violet-700, .text-violet-600, .text-indigo-700, .text-indigo-600, .text-amber-700, .text-amber-600, .text-red-700, .text-emerald-700 {
     color: #000 !important;
   }
-  .border-violet-100, .border-indigo-100, .border-amber-100, .border-slate-200, .border-slate-100 {
+  .border-violet-100, .border-indigo-100, .border-amber-100, .border-slate-200, .border-slate-100, .border-b, .border-t {
     border-color: transparent !important;
   }
-  .ring-1, .ring-2, .ring-inset {
+  .ring-1, .ring-2, .ring-inset, .ring-amber-400, .ring-indigo-400 {
     box-shadow: none !important;
   }
   .animate-float, .animate-pulse-glow, .animate-twinkle, .animate-spin, .animate-bounce, .animate-ping {
     animation: none !important;
   }
-  .overflow-hidden {
-    overflow: visible !important;
-  }
-  .overflow-x-auto {
+  .overflow-hidden, .overflow-x-auto {
     overflow: visible !important;
   }
   .grid {
@@ -1369,102 +1357,65 @@ body {
   .grid-cols-4 {
     grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
   }
-  .horoscope-charts, .print-chart-area, .charts-container > .grid {
+  .print-details, .print-details *, .print-details-row, .print-details-row > *, .print-details-label, .print-details-value, .print-details table, .print-details thead, .print-details tbody, .print-details tr, .print-details th, .print-details td {
+    border: 0 !important;
+    border-top: 0 !important;
+    border-right: 0 !important;
+    border-bottom: 0 !important;
+    border-left: 0 !important;
+    box-shadow: none !important;
+    outline: 0 !important;
+  }
+  .print-details {
     display: grid !important;
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    grid-template-rows: 1fr !important;
-    align-items: start !important;
-    justify-items: stretch !important;
-    gap: 4mm !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-    height: auto !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    break-before: avoid !important;
-    page-break-before: avoid !important;
-    break-after: avoid !important;
-    page-break-after: avoid !important;
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
-  }
-  .horoscope-charts > *, .print-chart-area > *, .charts-container > .grid > div {
-    display: block !important;
-    grid-column: auto !important;
-    grid-row: 1 !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-    height: auto !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
-  }
-  .horoscope-chart, .print-chart, .charts-container .chart {
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
-  }
-  .horoscope-chart > *, .print-chart > *, .charts-container .chart > * {
-    max-width: 100% !important;
-  }
-  .horoscope-chart table, .print-chart table, .charts-container .chart table {
-    width: 100% !important;
-    max-width: 100% !important;
-  }
-  .horoscope-chart > div:first-child, .print-chart > div:first-child, .charts-container .chart > div:first-child, .chart-title {
-    margin-bottom: 1mm !important;
-  }
-  main > section:has(.horoscope-charts), main > section:has(.print-chart-area), main > section:has(.charts-container) {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    column-gap: 7mm !important;
     width: 100% !important;
     margin: 0 0 2mm 0 !important;
     padding: 0 !important;
-    break-before: avoid !important;
-    page-break-before: avoid !important;
-    break-after: avoid !important;
-    page-break-after: avoid !important;
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
+    border-collapse: collapse !important;
+    border-spacing: 0 !important;
+    background: transparent !important;
   }
-  main > section:has(.horoscope-charts) > div:first-child, main > section:has(.print-chart-area) > div:first-child, main > section:has(.charts-container) > div:first-child {
-    margin: 0 0 1mm 0 !important;
+  .print-details-column {
+    min-width: 0 !important;
+    border: 0 !important;
+  }
+  .print-details-row {
+    display: grid !important;
+    grid-template-columns: 39% 61% !important;
+    min-height: 5mm !important;
+    margin: 0 !important;
     padding: 0 !important;
+    border-width: 0 !important;
+    border-style: none !important;
+    background: transparent !important;
   }
-  main > section:has(.horoscope-charts) > div:first-child h2, main > section:has(.print-chart-area) > div:first-child h2, main > section:has(.charts-container) > div:first-child h2 {
+  .print-details-label, .print-details-value {
+    padding: .35mm 0 !important;
     margin: 0 !important;
     font-size: 8pt !important;
     line-height: 1.1 !important;
+    color: #000 !important;
+    white-space: nowrap !important;
+    background: transparent !important;
   }
-  main > section:has(.horoscope-charts) + section, main > section:has(.print-chart-area) + section, main > section:has(.charts-container) + section, .charts-container + section, .charts-container ~ section {
-    break-before: avoid !important;
-    page-break-before: avoid !important;
+  .print-details-label {
+    font-weight: 600 !important;
+    text-align: left !important;
   }
-  .charts-container {
-    page-break-before: auto !important;
-    break-before: auto !important;
-    page-break-after: avoid !important;
-    break-after: avoid !important;
-    page-break-inside: avoid !important;
-    break-inside: avoid !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    margin-top: 0 !important;
-  }
-  .charts-container .zodiac-card {
-    min-width: 0 !important;
+  .print-details-value {
+    font-weight: 500 !important;
+    text-align: center !important;
   }
   main > section:has(.print-table) {
+    width: 100% !important;
+    margin: 0 0 2mm 0 !important;
+    padding: 0 !important;
     break-inside: auto !important;
     page-break-inside: auto !important;
     break-after: avoid !important;
     page-break-after: avoid !important;
-    margin-bottom: 2mm !important;
   }
   main > section:has(.print-table) .grid.grid-cols-1.md\:grid-cols-2 {
     display: grid !important;
@@ -1476,7 +1427,6 @@ body {
     margin: 0 !important;
     padding: 0 !important;
     align-items: start !important;
-    justify-content: stretch !important;
     break-inside: avoid !important;
     page-break-inside: avoid !important;
   }
@@ -1491,44 +1441,46 @@ body {
     break-inside: avoid !important;
     page-break-inside: avoid !important;
   }
-  main > section:has(.print-table) .print-table {
+  .print-table {
     width: 100% !important;
     min-width: 0 !important;
     max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
     table-layout: fixed !important;
     border-collapse: collapse !important;
     border-spacing: 0 !important;
-    margin: 0 !important;
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
   }
-  main > section:has(.print-table) .print-table thead {
-    display: none !important;
-  }
-  main > section:has(.print-table) .print-table, main > section:has(.print-table) .print-table tr, main > section:has(.print-table) .print-table td, main > section:has(.print-table) .print-table th {
+  .print-table, .print-table *, .print-table thead, .print-table tbody, .print-table tr, .print-table th, .print-table td {
     border: 0 !important;
     border-top: 0 !important;
     border-right: 0 !important;
     border-bottom: 0 !important;
     border-left: 0 !important;
+    box-shadow: none !important;
   }
-  main > section:has(.print-table) .print-table tbody tr {
-    border: 0 !important;
+  .print-table thead {
+    display: none !important;
   }
-  main > section:has(.print-table) .print-table tbody tr + tr {
-    border-top: 0 !important;
-  }
-  main > section:has(.print-table) .print-table td {
-    padding: 1mm 1mm !important;
+  .print-table td, .print-table th {
+    padding: .8mm 1mm !important;
     background: transparent !important;
     color: #000 !important;
-    font-size: 6.2pt !important;
-    line-height: 1.2 !important;
+    font-size: 6.1pt !important;
+    line-height: 1.1 !important;
     white-space: nowrap !important;
     vertical-align: middle !important;
   }
-  main > section:has(.print-table) .print-table td:first-child {
+  .print-table tbody td {
+    text-align: center !important;
+  }
+  .print-table tbody td:first-child {
     width: 20% !important;
-    font-weight: 700 !important;
     text-align: left !important;
+    font-weight: 700 !important;
   }
   main > section:has(.print-table) .print-table td:nth-child(2) {
     width: 17% !important;
@@ -1542,12 +1494,6 @@ body {
   main > section:has(.print-table) .print-table td:nth-child(5) {
     width: 27% !important;
   }
-  main > section:has(.print-table) .print-table tr, main > section:has(.print-table) .print-table td {
-    background: transparent !important;
-  }
-  main > section:has(.print-table) .print-table tr:hover, main > section:has(.print-table) .print-table tr:hover td {
-    background: transparent !important;
-  }
   main > section:has(table) {
     break-inside: avoid !important;
     page-break-inside: avoid !important;
@@ -1556,9 +1502,239 @@ body {
     break-inside: avoid !important;
     page-break-inside: avoid !important;
   }
-  main > section:has(table) + section, main > section:has(table) ~ section {
+  table {
+    width: 100% !important;
+    min-width: 0 !important;
+    table-layout: fixed !important;
+    border-collapse: collapse !important;
+    border-spacing: 0 !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    background: #fff !important;
+    color: #000 !important;
+  }
+  th, td {
+    padding: 1.1mm 1.5mm !important;
+    border: 0 !important;
+    border-top: 0 !important;
+    border-right: 0 !important;
+    border-bottom: 0 !important;
+    border-left: 0 !important;
+    border-color: transparent !important;
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 6.2pt !important;
+    line-height: 1.15 !important;
+    vertical-align: middle !important;
+    word-break: normal !important;
+  }
+  th {
+    font-weight: 800 !important;
+    text-align: center !important;
+  }
+  td {
+    font-weight: 500 !important;
+  }
+  tbody td.font-bold, tbody td.font-black, tbody td.font-semibold {
+    font-weight: 700 !important;
+  }
+  table span {
+    background: transparent !important;
+    color: #000 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    font-size: inherit !important;
+    font-weight: inherit !important;
+  }
+  .charts-container, main > section:has(.charts-container), main > section:has(.horoscope-charts), main > section:has(.print-chart-area) {
+    width: 100% !important;
+    margin: 0 0 2mm 0 !important;
+    padding: 0 !important;
     break-before: avoid !important;
     page-break-before: avoid !important;
+    break-after: avoid !important;
+    page-break-after: avoid !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+  main > section:has(.charts-container) > div:first-child, main > section:has(.horoscope-charts) > div:first-child, main > section:has(.print-chart-area) > div:first-child {
+    margin: 0 0 1mm 0 !important;
+    padding: 0 !important;
+  }
+  main > section:has(.charts-container) > div:first-child h2, main > section:has(.horoscope-charts) > div:first-child h2, main > section:has(.print-chart-area) > div:first-child h2 {
+    margin: 0 !important;
+    font-size: 8pt !important;
+    line-height: 1.1 !important;
+  }
+  .charts-container > .grid, .horoscope-charts, .print-chart-area {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    grid-template-rows: auto !important;
+    align-items: start !important;
+    justify-items: stretch !important;
+    gap: 3mm !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+  .charts-container > .grid > div, .horoscope-charts > *, .print-chart-area > * {
+    display: block !important;
+    grid-column: auto !important;
+    grid-row: auto !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 2mm !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+  .charts-container > .grid > div > div:first-child {
+    margin: 0 0 1.2mm 0 !important;
+    padding: 0 !important;
+    min-height: 0 !important;
+  }
+  .charts-container > .grid > div > div:first-child h3 {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 8pt !important;
+    line-height: 1.1 !important;
+    text-align: center !important;
+    color: #000 !important;
+    font-weight: 900 !important;
+  }
+  .charts-container .chart, .horoscope-chart, .print-chart {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    grid-template-rows: repeat(4, minmax(0, 1fr)) !important;
+    grid-auto-flow: row !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    aspect-ratio: 1 / 1 !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    gap: 0 !important;
+    overflow: hidden !important;
+    border: .6px solid #000 !important;
+    border-radius: 0 !important;
+    background: #fff !important;
+    box-sizing: border-box !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+  .charts-container .chart > .zodiac-card {
+    display: block !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 1mm !important;
+    overflow: hidden !important;
+    border: .5px solid #777 !important;
+    border-radius: 0 !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    transform: none !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+  .charts-container .chart > div:not(.zodiac-card) {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 1mm !important;
+  }
+  .charts-container .chart > .zodiac-card > div:first-child {
+    margin: 0 0 .5mm 0 !important;
+    font-size: 5.8pt !important;
+    line-height: 1 !important;
+    font-weight: 900 !important;
+    color: #000 !important;
+  }
+  .charts-container .chart > .zodiac-card > div:last-child {
+    font-size: 5.8pt !important;
+    line-height: 1.15 !important;
+    font-weight: 600 !important;
+    color: #000 !important;
+    overflow-wrap: anywhere !important;
+    word-break: normal !important;
+  }
+  .charts-container .chart > div[class*="col-start-2"][class*="row-start-2"] {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+    padding: 1mm !important;
+    overflow: hidden !important;
+    border: .5px solid #777 !important;
+    border-radius: 0 !important;
+    background: #fff !important;
+  }
+  .charts-container .chart > div[class*="col-start-2"][class*="row-start-2"] > div {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .charts-container .chart > div[class*="col-start-2"][class*="row-start-2"] img {
+    display: block !important;
+    width: 11mm !important;
+    height: 11mm !important;
+    max-width: 11mm !important;
+    margin: 0 auto .7mm auto !important;
+    animation: none !important;
+  }
+  .charts-container .chart > div[class*="col-start-2"][class*="row-start-2"] p {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 6.2pt !important;
+    line-height: 1.1 !important;
+    color: #000 !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+  }
+  .charts-container .chart > div[class*="col-start-2"][class*="row-start-2"] p:first-of-type {
+    font-size: 7pt !important;
+    line-height: 1.1 !important;
+    font-weight: 900 !important;
+  }
+  .charts-container .chart .lagna-marker {
+    width: 3mm !important;
+    height: 3mm !important;
+    min-width: 3mm !important;
+    min-height: 3mm !important;
+    right: .8mm !important;
+    top: .8mm !important;
+    padding: 0 !important;
+    font-size: 4pt !important;
+    line-height: 3mm !important;
+    background: #000 !important;
+    color: #fff !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+  .charts-container .chart .ring-amber-400, .charts-container .chart .ring-indigo-400 {
+    box-shadow: inset 0 0 0 .5px #000 !important;
   }
   .south-indian-chart {
     width: 80% !important;
@@ -1647,284 +1823,47 @@ body {
     font-size: 5pt !important;
     color: #000 !important;
   }
-  .print-table {
-    width: 100% !important;
-    margin: 0 !important;
-    table-layout: fixed !important;
-    border: 0 !important;
-  }
-  .print-table thead, .print-table thead tr, .print-table thead th {
-    font-weight: 900 !important;
-    border: 0 !important;
-    text-align: center !important;
-  }
-  .print-table th, .print-table td {
-    padding: .9mm 1.1mm !important;
-    font-size: 5.8pt !important;
-    line-height: 1.15 !important;
-    border: 0 !important;
-  }
-  .print-table tbody td {
-    text-align: center !important;
-  }
-  .print-table tbody td:first-child {
-    text-align: left !important;
-  }
-  .print-dasha {
+  .print-dasha, main > section:has(.print-dasha) {
     display: block !important;
     width: 100% !important;
-    margin: 2mm 0 2mm 0 !important;
+    margin: 1.2mm 0 2mm 0 !important;
     padding: 0 !important;
-    font-size: 6pt !important;
-    line-height: 1.25 !important;
+    font-size: 6.4pt !important;
+    line-height: 1.15 !important;
     font-weight: 600 !important;
+    text-align: left !important;
     color: #000 !important;
     border: 0 !important;
     box-shadow: none !important;
     background: #fff !important;
-    break-before: avoid !important;
-    page-break-before: avoid !important;
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
-  }
-  main > section:has(.print-dasha) {
-    width: 100% !important;
-    margin-top: 0 !important;
-    padding-top: 0 !important;
     break-before: avoid !important;
     page-break-before: avoid !important;
     break-inside: avoid !important;
     page-break-inside: avoid !important;
   }
   .print-dasha *, .current-dasha-detail, .current-dasha-detail * {
+    border: 0 !important;
+    border-top: 0 !important;
+    border-right: 0 !important;
+    border-bottom: 0 !important;
+    border-left: 0 !important;
     border-color: transparent !important;
+    box-shadow: none !important;
   }
   .current-dasha-detail {
-    border: 0 !important;
-    box-shadow: none !important;
     background: #fff !important;
   }
   .print-dasha strong {
     font-weight: 900 !important;
   }
-  .print-details {
+  .additional-details-print {
+    display: block !important;
+  }
+  .additional-details-grid {
     display: grid !important;
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    column-gap: 8mm !important;
-    width: 100% !important;
-    margin: 0 0 3mm 0 !important;
-    padding: 0 !important;
-  }
-  .print-details-column {
-    min-width: 0 !important;
-  }
-  .print-details-row {
-    display: grid !important;
-    grid-template-columns: 38% 62% !important;
-    min-height: 4.5mm !important;
-    border: 0 !important;
-    border-bottom: 0 !important;
-  }
-  .print-details-label, .print-details-value {
-    padding: .45mm 0 !important;
-    font-size: 8pt !important;
-    line-height: 1.2 !important;
-    color: #000 !important;
-    border: 0 !important;
-    white-space: nowrap !important;
-  }
-  .print-details-label {
-    font-weight: 600 !important;
-  }
-  .print-details-value {
-    font-weight: 500 !important;
-    text-align: center !important;
-    white-space: nowrap !important;
-  }
-  .print-details-row > * {
-    border: 0 !important;
-  }
-  details {
-    display: block !important;
-    margin: 0 0 1.5mm 0 !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    background: #fff !important;
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
-  }
-  details > summary {
-    display: flex !important;
-    padding: 1.5mm 2mm !important;
-    cursor: default !important;
-    list-style: none !important;
-    color: #000 !important;
-    border: 0 !important;
-  }
-  details > summary::-webkit-details-marker {
-    display: none !important;
-  }
-  details > summary svg {
-    display: none !important;
-  }
-  details > div {
-    display: block !important;
-    padding: 1mm !important;
-    background: #fff !important;
-    border: 0 !important;
-  }
-  details table th, details table td {
-    padding: 1mm 1.5mm !important;
-    font-size: 5.8pt !important;
-    border: 0 !important;
-  }
-  table {
-    width: 100% !important;
-    min-width: 0 !important;
-    table-layout: fixed !important;
-    border-collapse: collapse !important;
-    border-spacing: 0 !important;
-    border: 0 !important;
-    box-shadow: none !important;
-    background: #fff !important;
-    color: #000 !important;
-  }
-  table thead, table tbody, table tr {
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
-    border: 0 !important;
-  }
-  th, td {
-    padding: 1.1mm 1.5mm !important;
-    border: 0 !important;
-    border-color: transparent !important;
-    background: #fff !important;
-    color: #000 !important;
-    font-size: 6.2pt !important;
-    line-height: 1.15 !important;
-    vertical-align: middle !important;
-    word-break: normal !important;
-  }
-  th {
-    font-weight: 800 !important;
-    background: #fff !important;
-    text-align: center !important;
-  }
-  td {
-    font-weight: 500 !important;
-  }
-  tbody td.font-bold, tbody td.font-black, tbody td.font-semibold {
-    font-weight: 700 !important;
-  }
-  table span {
-    background: transparent !important;
-    color: #000 !important;
-    padding: 0 !important;
-    border-radius: 0 !important;
-    font-size: inherit !important;
-    font-weight: inherit !important;
-  }
-  .overflow-hidden.rounded-3xl.border, .overflow-hidden.rounded-2xl.border, .overflow-hidden.rounded-xl.border {
-    border: 0 !important;
-    border-radius: 0 !important;
-  }
-  .mb-10 {
-    margin-bottom: 3mm !important;
-  }
-  .mb-8 {
-    margin-bottom: 3mm !important;
-  }
-  .mb-7 {
-    margin-bottom: 2mm !important;
-  }
-  .mb-6 {
-    margin-bottom: 2mm !important;
-  }
-  .mb-5 {
-    margin-bottom: 1.5mm !important;
-  }
-  .mb-4 {
-    margin-bottom: 1.5mm !important;
-  }
-  .mb-3 {
-    margin-bottom: 1mm !important;
-  }
-  .mb-2 {
-    margin-bottom: .5mm !important;
-  }
-  .mt-8 {
-    margin-top: 3mm !important;
-  }
-  .mt-6 {
-    margin-top: 2mm !important;
-  }
-  .mt-5 {
-    margin-top: 1.5mm !important;
-  }
-  .mt-4 {
-    margin-top: 1mm !important;
-  }
-  .mt-2, .mt-1 {
-    margin-top: .5mm !important;
-  }
-  .p-8, .p-6, .p-5 {
-    padding: 2mm !important;
-  }
-  .p-4 {
-    padding: 1.5mm !important;
-  }
-  .p-3 {
-    padding: 1mm !important;
-  }
-  .px-6, .px-5 {
-    padding-left: 2mm !important;
-    padding-right: 2mm !important;
-  }
-  .px-4 {
-    padding-left: 1.5mm !important;
-    padding-right: 1.5mm !important;
-  }
-  .py-5, .py-4 {
-    padding-top: 1.5mm !important;
-    padding-bottom: 1.5mm !important;
-  }
-  .py-3 {
-    padding-top: 1mm !important;
-    padding-bottom: 1mm !important;
-  }
-  .min-h-\[125px\] {
-    min-height: 0 !important;
-  }
-  .min-h-\[180px\] {
-    min-height: 0 !important;
-  }
-  .text-4xl, .text-3xl {
-    font-size: 14pt !important;
-  }
-  .text-2xl {
-    font-size: 10pt !important;
-  }
-  .text-xl {
-    font-size: 9pt !important;
-  }
-  .text-lg {
-    font-size: 8pt !important;
-  }
-  .text-sm {
-    font-size: 7pt !important;
-  }
-  .text-xs {
-    font-size: 6pt !important;
-  }
-  .leading-5 {
-    line-height: 1.2 !important;
-  }
-  .font-black, .font-bold, .font-semibold {
-    font-weight: 700 !important;
-  }
-  .font-medium {
-    font-weight: 500 !important;
+    column-gap: 2.5rem !important;
+    row-gap: .75rem !important;
   }
   .print-contact-bar {
     display: block !important;
@@ -1975,41 +1914,97 @@ body {
   .divide-y > * + * {
     border-top: 0 !important;
   }
-  .border-b, .border-t {
-    border-color: transparent !important;
+  .mb-10, .mb-8 {
+    margin-bottom: 3mm !important;
   }
-  .bg-amber-50\/50, .bg-violet-50\/40, .bg-amber-50\/40, .hover\:bg-violet-50\/40, .hover\:bg-violet-50\/50, .hover\:bg-amber-50 {
-    background: #fff !important;
+  .mb-7, .mb-6 {
+    margin-bottom: 2mm !important;
   }
-  .ring-amber-400, .ring-indigo-400 {
-    box-shadow: none !important;
+  .mb-5, .mb-4 {
+    margin-bottom: 1.5mm !important;
   }
-  .print-hide, .non-printable {
-    display: none !important;
-    visibility: hidden !important;
+  .mb-3 {
+    margin-bottom: 1mm !important;
   }
-  .print-hide *, .non-printable * {
-    display: none !important;
-    visibility: hidden !important;
+  .mb-2 {
+    margin-bottom: .5mm !important;
   }
-  .print-show {
-    display: block !important;
+  .mt-8 {
+    margin-top: 3mm !important;
   }
-  .print-inline {
-    display: inline !important;
+  .mt-6 {
+    margin-top: 2mm !important;
   }
-  .print-flex {
-    display: flex !important;
+  .mt-5 {
+    margin-top: 1.5mm !important;
   }
-  .print-grid {
-    display: grid !important;
+  .mt-4 {
+    margin-top: 1mm !important;
+  }
+  .mt-2, .mt-1 {
+    margin-top: .5mm !important;
+  }
+  .p-8, .p-6, .p-5 {
+    padding: 2mm !important;
+  }
+  .p-4 {
+    padding: 1.5mm !important;
+  }
+  .p-3 {
+    padding: 1mm !important;
+  }
+  .px-6, .px-5 {
+    padding-left: 2mm !important;
+    padding-right: 2mm !important;
+  }
+  .px-4 {
+    padding-left: 1.5mm !important;
+    padding-right: 1.5mm !important;
+  }
+  .py-5, .py-4 {
+    padding-top: 1.5mm !important;
+    padding-bottom: 1.5mm !important;
+  }
+  .py-3 {
+    padding-top: 1mm !important;
+    padding-bottom: 1mm !important;
+  }
+  .min-h-\[125px\], .min-h-\[180px\] {
+    min-height: 0 !important;
+  }
+  .text-4xl, .text-3xl {
+    font-size: 14pt !important;
+  }
+  .text-2xl {
+    font-size: 10pt !important;
+  }
+  .text-xl {
+    font-size: 9pt !important;
+  }
+  .text-lg {
+    font-size: 8pt !important;
+  }
+  .text-sm {
+    font-size: 7pt !important;
+  }
+  .text-xs {
+    font-size: 6pt !important;
+  }
+  .leading-5 {
+    line-height: 1.2 !important;
+  }
+  .font-black, .font-bold, .font-semibold {
+    font-weight: 700 !important;
+  }
+  .font-medium {
+    font-weight: 500 !important;
   }
   .padacharam, .padacharam table {
-    border: 0.5px solid #000 !important;
+    border: .5px solid #000 !important;
     border-collapse: collapse !important;
   }
   .padacharam th, .padacharam td {
-    border: 0.5px solid #000 !important;
+    border: .5px solid #000 !important;
     font-size: 8.5pt !important;
   }
   .padacharam th {
@@ -2018,7 +2013,7 @@ body {
   .pillaiyar-suzhi {
     position: relative;
     width: fit-content;
-    margin: 0 auto 0.25rem;
+    margin: 0 auto .25rem;
     font-size: 1.25rem;
     font-weight: 600;
     line-height: 1;
@@ -2032,237 +2027,17 @@ body {
     margin-top: -1px;
     margin-bottom: 5px;
   }
-  .non-printable {
-    display: none !important;
-    visibility: hidden !important;
-  }
-  .non-printable *, .non-printable::before, .non-printable::after {
-    display: none !important;
-    visibility: hidden !important;
-    content: none !important;
-  }
-  main > section:has(.charts-container), .charts-container {
-    width: 100% !important;
-    margin: 0 0 2.5mm 0 !important;
-    padding: 0 !important;
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
-  }
-  .charts-container > .grid {
-    display: grid !important;
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    grid-template-rows: auto !important;
-    align-items: start !important;
-    gap: 3mm !important;
-    width: 100% !important;
-    height: auto !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-  .charts-container > .grid > div {
+  .print-show {
     display: block !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: none !important;
-    margin: 0 !important;
-    padding: 2mm !important;
-    grid-column: auto !important;
-    grid-row: auto !important;
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
   }
-  .charts-container > .grid > div > div:first-child {
-    margin: 0 0 1.2mm 0 !important;
-    padding: 0 !important;
-    min-height: 0 !important;
+  .print-inline {
+    display: inline !important;
   }
-  .charts-container > .grid > div > div:first-child h3 {
-    margin: 0 !important;
-    padding: 0 !important;
-    font-size: 8pt !important;
-    line-height: 1.1 !important;
-    text-align: center !important;
-    color: #000 !important;
-    font-weight: 900 !important;
-  }
-  .charts-container .chart {
-    display: grid !important;
-    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-    grid-template-rows: repeat(4, minmax(0, 1fr)) !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    aspect-ratio: 1 / 1 !important;
-    height: auto !important;
-    min-height: 0 !important;
-    margin: 0 auto !important;
-    padding: 0 !important;
-    gap: 0 !important;
-    overflow: hidden !important;
-    border: 0.6px solid #000 !important;
-    border-radius: 0 !important;
-    background: #fff !important;
-  }
-  .charts-container .chart > .zodiac-card {
-    display: block !important;
-    min-width: 0 !important;
-    min-height: 0 !important;
-    width: auto !important;
-    height: auto !important;
-    margin: 0 !important;
-    padding: 1mm !important;
-    overflow: hidden !important;
-    border: 0.5px solid #777 !important;
-    border-radius: 0 !important;
-    background: #fff !important;
-    box-shadow: none !important;
-    transform: none !important;
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
-  }
-  .charts-container .chart > .zodiac-card > div:first-child {
-    margin: 0 0 .5mm 0 !important;
-    font-size: 5.8pt !important;
-    line-height: 1 !important;
-    font-weight: 900 !important;
-    color: #000 !important;
-  }
-  .charts-container .chart > .zodiac-card > div:last-child {
-    font-size: 5.8pt !important;
-    line-height: 1.15 !important;
-    font-weight: 600 !important;
-    color: #000 !important;
-    overflow-wrap: anywhere !important;
-    word-break: normal !important;
-  }
-  .charts-container .chart > div[style], .charts-container .chart > div {
-    min-width: 0 !important;
-  }
-  .charts-container .chart > div[class*="col-start-2"][class*="row-start-2"] {
+  .print-flex {
     display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    min-width: 0 !important;
-    min-height: 0 !important;
-    width: auto !important;
-    height: auto !important;
-    margin: 0 !important;
-    padding: 1mm !important;
-    overflow: hidden !important;
-    border: 0.5px solid #777 !important;
-    border-radius: 0 !important;
-    background: #fff !important;
   }
-  .charts-container .chart > div[class*="col-start-2"][class*="row-start-2"] > div {
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-  .charts-container .chart > div[class*="col-start-2"][class*="row-start-2"] img {
-    display: block !important;
-    width: 11mm !important;
-    height: 11mm !important;
-    max-width: 11mm !important;
-    margin: 0 auto .7mm auto !important;
-    animation: none !important;
-  }
-  .charts-container .chart > div[class*="col-start-2"][class*="row-start-2"] p {
-    margin: 0 !important;
-    padding: 0 !important;
-    font-size: 6.2pt !important;
-    line-height: 1.1 !important;
-    color: #000 !important;
-    white-space: normal !important;
-    overflow-wrap: anywhere !important;
-  }
-  .charts-container .chart > div[class*="col-start-2"][class*="row-start-2"] p:first-of-type {
-    font-size: 7pt !important;
-    line-height: 1.1 !important;
-    font-weight: 900 !important;
-  }
-  .charts-container .chart .lagna-marker {
-    width: 3mm !important;
-    height: 3mm !important;
-    min-width: 3mm !important;
-    min-height: 3mm !important;
-    right: .8mm !important;
-    top: .8mm !important;
-    padding: 0 !important;
-    font-size: 4pt !important;
-    line-height: 3mm !important;
-    background: #000 !important;
-    color: #fff !important;
-    border: 0 !important;
-    box-shadow: none !important;
-  }
-  .charts-container .chart .ring-amber-400, .charts-container .chart .ring-indigo-400 {
-    box-shadow: inset 0 0 0 .5px #000 !important;
-  }
-  main > section:has(.print-dasha) {
-    margin-top: 0 !important;
-    margin-bottom: 2mm !important;
-    break-before: avoid !important;
-    page-break-before: avoid !important;
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
-  }
-  .print-dasha {
-    margin: 1.2mm 0 1.2mm 0 !important;
-    padding: 0 !important;
-    font-size: 6.4pt !important;
-    line-height: 1.15 !important;
-    text-align: left !important;
-  }
-  .print-details {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    column-gap: 7mm !important;
-    margin-bottom: 2mm !important;
-  }
-  .print-details-row {
-    min-height: 5mm !important;
-    grid-template-columns: 39% 61% !important;
-  }
-  .print-details-label, .print-details-value {
-    padding: .35mm 0 !important;
-    font-size: 8pt !important;
-    line-height: 1.1 !important;
-  }
-  .print-details-value {
-    text-align: center !important;
-  }
-  main > section:has(.print-table) {
-    margin-bottom: 2mm !important;
-  }
-  main > section:has(.print-table) .print-table td, main > section:has(.print-table) .print-table th {
-    padding: .8mm 1mm !important;
-    font-size: 6.1pt !important;
-    line-height: 1.1 !important;
-  }
-  header.no-print {
-    margin-bottom: 3mm !important;
-  }
-  .print-title {
-    font-size: 15pt !important;
-    line-height: 1.05 !important;
-  }
-  .print-subtitle {
-    margin-bottom: 1mm !important;
-    font-size: 8pt !important;
-  }
-  .print-address, .print-contact {
-    margin-top: .4mm !important;
-    font-size: 6.5pt !important;
-    line-height: 1.15 !important;
-  }
-  .additional-details-print {
-    display: block !important;
-  }
-  .additional-details-grid {
+  .print-grid {
     display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    column-gap: 2.5rem !important;
-    row-gap: 0.75rem !important;
   }
 }
 @property --tw-translate-x {

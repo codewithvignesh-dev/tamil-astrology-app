@@ -6,7 +6,7 @@ from zoneinfo import ZoneInfo
 from calendar import monthrange
 from astrology.models import BirthDetails, AdditionalDetails
 from astrology.angles import decimal_to_dms
-from astrology.constants import SIGN_RULERS, PLANET_NAMES_TAMIL, DOB_to_DAY
+from astrology.constants import SIGN_RULERS, PLANET_NAMES_TAMIL, DOB_to_DAY, GENDER_TAMIL, RELATIONSHIP_NAMES_TAMIL, MARITAL_STATUS_TAMIL
 from astrology.angles import decimal_to_dms
 from astrology.nakshatra import calculate_tamil_solar_date
 from services.horoscope_service import HoroscopeService
@@ -23,7 +23,7 @@ def _parse_birth_details() -> BirthDetails:
     time = request.form.get("time", "")
     timezone = request.form.get("timezone", "Asia/Kolkata").strip() or "Asia/Kolkata"
     district = request.form.get("district", "").strip()
-
+    gender = GENDER_TAMIL.get(gender, gender)
     lat = 0.0
     lon = 0.0
     if district:
@@ -66,6 +66,8 @@ def _parse_additional_details() -> AdditionalDetails:
     family_members = []
 
     for i in range(len(family_names)):
+        family_relations[i] = RELATIONSHIP_NAMES_TAMIL.get(family_relations[i], family_relations[i])
+        family_marital_statuses[i] = MARITAL_STATUS_TAMIL.get(family_marital_statuses[i], family_marital_statuses[i])
         family_members.append({
             "name": family_names[i].strip(),
             "relation": family_relations[i].strip() if i < len(family_relations) else "",
@@ -73,9 +75,7 @@ def _parse_additional_details() -> AdditionalDetails:
             "work": family_works[i].strip() if i < len(family_works) else "",
             "martial_status": family_marital_statuses[i].strip() if i < len(family_marital_statuses) else "",
         })
-
     additional_details["family_members"] = family_members
-
     return AdditionalDetails(
         kulam=additional_details["kulam"],
         kothiram=additional_details["kothiram"],

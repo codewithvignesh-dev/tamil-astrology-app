@@ -393,3 +393,25 @@ WEEKLY_LORDS = [
     "Venus",
     "Saturn",
 ]
+
+GENDER_TAMIL = {
+    "male": "ஆண்",
+    "female": "பெண்",
+}
+
+RELATIONSHIP_NAMES_TAMIL = {
+    "Father": "தந்தை",
+    "Mother": "தாய்",
+    "Elder Brother": "மூத்த சகோதரர்",
+    "Younger Brother": "இளைய சகோதரர்",
+    "Elder Sister": "மூத்த சகோதரி",
+    "Younger Sister": "இளைய சகோதரி",
+}
+
+MARITAL_STATUS_TAMIL = {
+    "Unmarried": "திருமணம் ஆகவில்லை",
+    "Married": "திருமணமானவர்",
+    "Widow": "விதவை",
+    "Widower": "விதவர்",
+    "Divorced": "விவாகரத்து",
+}

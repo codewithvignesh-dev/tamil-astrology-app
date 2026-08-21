@@ -221,10 +221,6 @@
                             <option value="female">
                                 பெண்
                             </option>
-
-                            <option value="other">
-                                மற்றவை
-                            </option>
                         </select>
                     </div>
 
@@ -1612,12 +1608,12 @@
                                             {{ basic_details.dob }} - {{ basic_details.tob }}
                                         </p>
 
-                                        <p class="mt-1 font-semibold text-violet-700">
+                                        <p class="non-printable mt-1 font-semibold text-violet-700">
                                             {{ basic_details.raasi }} -
                                             {{ panchangam.nakshatra if panchangam is defined else '' }}
                                         </p>
 
-                                        <p class="mt-1 text-xs text-slate-500">
+                                        <p class="non-printable mt-1 text-xs text-slate-500">
                                             பாதம் - {{ basic_details.pada }}
                                         </p>
 
@@ -1775,12 +1771,12 @@
                                             {{ basic_details.dob }} - {{ basic_details.tob }}
                                         </p>
 
-                                        <p class="mt-1 font-semibold text-violet-700">
+                                        <p class="non-printable mt-1 font-semibold text-violet-700">
                                             {{ basic_details.raasi }} -
                                             {{ panchangam.nakshatra if panchangam is defined else '' }}
                                         </p>
 
-                                        <p class="mt-1 text-xs text-slate-500">
+                                        <p class="non-printable mt-1 text-xs text-slate-500">
                                             பாதம் - {{ basic_details.pada }}
                                         </p>
 
