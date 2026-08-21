@@ -1379,12 +1379,38 @@
                                                 {{ sign.sign_index + 1 }}
                                             </div>
 
-                                            <div
+                                            <div class="text-xs leading-5">
+                                                {% for planet in sign.planets %}
+
+                                                    {% set planet_color = {
+                                                        'சூ': 'var(--planet-sun)',
+                                                        'சந்': 'var(--planet-moon)',
+                                                        'செ': 'var(--planet-mars)',
+                                                        'பு': 'var(--planet-mercury)',
+                                                        'கு': 'var(--planet-jupiter)',
+                                                        'சுக்': 'var(--planet-venus)',
+                                                        'சனி': 'var(--planet-saturn)',
+                                                        'ரா': 'var(--planet-rahu)',
+                                                        'கே': 'var(--planet-ketu)',
+                                                        'மா': 'var(--planet-maandi)'
+                                                    }.get(planet, '#475569') %}
+
+                                                    <span
+                                                        class="inline-block mr-1 font-bold"
+                                                        style="color: {{ planet_color }};"
+                                                    >
+                                                        {{ planet }}
+                                                    </span>
+
+                                                {% endfor %}
+                                            </div>
+
+                                            <!-- <div
                                                 class="text-xs leading-5
                                                     text-slate-600"
                                             >
                                                 {{ sign.planets | join(', ') }}
-                                            </div>
+                                            </div> -->
 
                                             {% if lagna is defined and sign_index == lagna.sign_index %}
 
@@ -1556,7 +1582,36 @@
 
                                             {% endfor %}
 
-                                            <div
+                                            <div class="text-xs leading-5">
+                                                {% for planet in sign.planets %}
+
+                                                    {% if planet != 'ல' %}
+
+                                                        {% set planet_color = {
+                                                            'சூ': 'var(--planet-sun)',
+                                                            'சந்': 'var(--planet-moon)',
+                                                            'செ': 'var(--planet-mars)',
+                                                            'பு': 'var(--planet-mercury)',
+                                                            'கு': 'var(--planet-jupiter)',
+                                                            'சுக்': 'var(--planet-venus)',
+                                                            'சனி': 'var(--planet-saturn)',
+                                                            'ரா': 'var(--planet-rahu)',
+                                                            'கே': 'var(--planet-ketu)',
+                                                            'மா': 'var(--planet-maandi)'
+                                                        }.get(planet, '#475569') %}
+
+                                                        <span
+                                                            class="inline-block mr-1 font-bold"
+                                                            style="color: {{ planet_color }};"
+                                                        >
+                                                            {{ planet }}
+                                                        </span>
+
+                                                    {% endif %}
+
+                                                {% endfor %}
+                                            </div>
+                                            <!-- <div
                                                 class="text-xs leading-5
                                                     text-slate-600"
                                             >
@@ -1564,7 +1619,7 @@
                                                 | reject('equalto', 'ல')
                                                 | list
                                                 | join(',') }}
-                                            </div>
+                                            </div> -->
 
                                         </div>
 
@@ -1709,10 +1764,38 @@
 
                                             <div
                                                 class="text-xs font-medium leading-5
+                                                    whitespace-normal"
+                                            >
+                                                {% for planet in planets_in_sign %}
+
+                                                    {% set planet_color = {
+                                                        'சூ': 'var(--planet-sun)',
+                                                        'சந்': 'var(--planet-moon)',
+                                                        'செ': 'var(--planet-mars)',
+                                                        'பு': 'var(--planet-mercury)',
+                                                        'கு': 'var(--planet-jupiter)',
+                                                        'சுக்': 'var(--planet-venus)',
+                                                        'சனி': 'var(--planet-saturn)',
+                                                        'ரா': 'var(--planet-rahu)',
+                                                        'கே': 'var(--planet-ketu)',
+                                                        'மா': 'var(--planet-maandi)'
+                                                    }.get(planet, '#475569') %}
+
+                                                    <span
+                                                        class="inline-block mr-1 font-bold"
+                                                        style="color: {{ planet_color }};"
+                                                    >
+                                                        {{ planet }}
+                                                    </span>
+
+                                                {% endfor %}
+                                            </div>
+                                            <!-- <div
+                                                class="text-xs font-medium leading-5
                                                     text-slate-700 whitespace-normal"
                                             >
                                                 {{ planets_in_sign | join(', ') }}
-                                            </div>
+                                            </div> -->
 
                                             {% if lagna is defined and sign_index == lagna.sign_index %}
 

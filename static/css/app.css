@@ -326,6 +326,9 @@
   .mt-8 {
     margin-top: calc(var(--spacing) * 8);
   }
+  .mr-1 {
+    margin-right: var(--spacing);
+  }
   .mb-1 {
     margin-bottom: var(--spacing);
   }
@@ -364,6 +367,9 @@
   }
   .hidden {
     display: none;
+  }
+  .inline-block {
+    display: inline-block;
   }
   .h-5 {
     height: calc(var(--spacing) * 5);
@@ -1135,6 +1141,18 @@
   .\[\&\:\:-webkit-details-marker\]\:hidden::-webkit-details-marker {
     display: none;
   }
+}
+:root {
+  --planet-sun: #E53935;
+  --planet-moon: #F4D35E;
+  --planet-mars: #D32F2F;
+  --planet-mercury: #2E7D32;
+  --planet-jupiter: #FBC02D;
+  --planet-venus: #8E44AD;
+  --planet-saturn: #1A237E;
+  --planet-rahu: #424242;
+  --planet-ketu: #795548;
+  --planet-maandi: #000000;
 }
 html {
   scroll-behavior: smooth;

@@ -37,6 +37,19 @@
     }
 }
 
+:root {
+    --planet-sun: #E53935;        /* சூரியன் - Red */
+    --planet-moon: #F4D35E;       /* சந்திரன் - Gold / White-Yellow */
+    --planet-mars: #D32F2F;       /* செவ்வாய் - Red */
+    --planet-mercury: #2E7D32;    /* புதன் - Green */
+    --planet-jupiter: #FBC02D;    /* குரு - Yellow */
+    --planet-venus: #8E44AD;      /* சுக்கிரன் - Violet */
+    --planet-saturn: #1A237E;     /* சனி - Neelam */
+    --planet-rahu: #424242;       /* ராகு - Black / Smoky Grey */
+    --planet-ketu: #795548;       /* கேது - Paluppu / Semmai / Brown */
+    --planet-maandi: #000000;     /* மாந்தி - Black */
+}
+
 /* Small amount of semantic CSS where Tailwind utilities alone
    become unnecessarily verbose. */
 
